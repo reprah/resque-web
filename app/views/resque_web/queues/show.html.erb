@@ -13,11 +13,20 @@
     <tr>
       <th>Class</th>
       <th>Args</th>
+      <th>Actions</th>
     </tr>
     <% queue_jobs.each do |job| %>
     <tr>
       <td class='class'><%= job['class'] %></td>
       <td class='args'><%=h job['args'].inspect %></td>
+      <td class='actions'>
+        <%= form_tag(job_path(job['class']), :method => :delete) do %>
+          <%= hidden_field_tag :queue, params[:id] %>
+          <%= hidden_field_tag :job_class, job['class'] %>
+          <%= hidden_field_tag :args, JSON.dump(job['args']) %>
+          <%= submit_tag "Delete", :class => 'btn btn-default' %>
+        <% end %>
+      </td>
     </tr>
     <% end %>
     <% if queue_jobs.empty? %>

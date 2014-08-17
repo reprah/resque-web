@@ -9,6 +9,7 @@ ResqueWeb::Engine.routes.draw do
 
   resource  :overview,  :only => [:show], :controller => :overview
   resources :working,   :only => [:index]
+  resources :jobs,      :only => [:destroy], param: :job_class
   resources :queues,    :only => [:index,:show,:destroy], :constraints => {:id => id_pattern} do
     member do
       put 'clear' 
